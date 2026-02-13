@@ -1,11 +1,12 @@
 import { Animated, ViewProps } from "react-native";
 import { useThemeStore } from "..";
 import { ColorStates } from "../types";
+import { AnimatedInterpolValue } from "@/Shared/Types/native.type";
 
 
 export type ThemeViewProps = ViewProps & {
     color?: ColorStates,
-    backgroundColor?: string,
+    backgroundColor?: string | AnimatedInterpolValue,
     useWindBackground?: boolean
 }
 
