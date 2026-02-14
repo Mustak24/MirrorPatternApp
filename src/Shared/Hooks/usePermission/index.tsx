@@ -1,6 +1,5 @@
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 import { Linking, Permission, PermissionsAndroid, PermissionStatus, Platform } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
 import PermissionModal from "./PermissionModal";
 
 
@@ -21,6 +20,7 @@ export default function usePermission({ permission, autoRequest = false, onDeny,
 
 
     async function requestPermission() {
+        console.log('requesting permission');
         if(Platform.OS !== 'android') return;
 
         try {
@@ -71,16 +71,15 @@ export default function usePermission({ permission, autoRequest = false, onDeny,
         )
     }
 
-    
-    useFocusEffect(useCallback(() => {
-        if(autoRequest && permissionStatus === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN) {
+    useEffect(() => {
+        if(autoRequest) {
             requestPermission();
         }
-    }, []))
-
+    }, []);
 
     return {
         requestPermission,
+        permissionStatus,
         Modal
     }   
 }

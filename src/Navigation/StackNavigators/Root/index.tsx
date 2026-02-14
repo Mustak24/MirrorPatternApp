@@ -3,6 +3,7 @@ import { RootStackParamList } from './types';
 import HomeScreen from '@/Screens/HomeScreen';
 import MirrorPatternScreen from '@/Screens/MirrorPatternScreen';
 import CameraScreen from '@/Screens/CameraScreen';
+import SettingScreen from '@/Screens/SettingScreen';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -10,6 +11,7 @@ const screens: Array<Parameters<typeof Stack.Screen>[0]> = [
   { name: 'Home', component: HomeScreen },
   { name: 'MirrorPattern', component: MirrorPatternScreen },
   { name: 'Camera', component: CameraScreen },
+  { name: 'Setting', component: SettingScreen },
 ];
 
 export default function RootStackNavigator() {

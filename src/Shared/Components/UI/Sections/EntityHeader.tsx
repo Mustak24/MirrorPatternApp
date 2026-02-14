@@ -3,14 +3,24 @@ import { ThemeViewProps } from "@/Shared/Stores/Theme/Components/ThemeView";
 import { IconButton } from "../Buttons";
 import ShowWhen from "../../Core/ShowWhen";
 import { View } from "react-native";
+import { navigationRef } from "@/Navigation";
+import { RootStackParamList } from "@/Navigation/StackNavigators/Root/types";
 
 
 export type EntityHeaderProps = ThemeViewProps & {
-    label?: string,
+    label?: string
 }
 
 
 export default function EntityHeader({label, children, className, ...props}: EntityHeaderProps) {
+
+    function handleGoBack() {
+        if(navigationRef.canGoBack()) {
+            navigationRef.goBack()
+        }
+        navigationRef.navigate('Home');
+    }
+
     return (
         <ThemeView {...props} className={`w-full py-5 flex-row items-center gap-2 ${className}`} >
             <View className="flex-row items-center gap-1" >
@@ -18,11 +28,11 @@ export default function EntityHeader({label, children, className, ...props}: Ent
                     variant="text"
                     color="text"
                     icon="ChevronLeft"
-                    onPress={() => {}}
+                    onPress={handleGoBack}
                     />
 
                 <ShowWhen when={!!label} >
-                    <ThemeText className='text-lg font-semibold'>{label}</ThemeText>
+                    <ThemeText className='text-xl font-bold'>{label}</ThemeText>
                 </ShowWhen>
             </View>
 

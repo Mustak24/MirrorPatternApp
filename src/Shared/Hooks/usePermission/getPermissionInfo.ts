@@ -31,12 +31,12 @@ const PERMISSIONS_INFO = {
   'android.permission.READ_MEDIA_VIDEO': {
     title: 'Video Files Access',
     description:
-      'This app needs access to your video files to display and play them. Your privacy is important - we only access videos you choose to interact with.',
+      'This app needs access to your video files to display and play them. Your privacy is important, we only access videos you choose to interact with.',
   },
   'android.permission.READ_MEDIA_IMAGES': {
     title: 'Photos Access',
     description:
-      'This app needs access to your photos to display and share them. Your privacy is important - we only access images you choose to interact with.',
+      'This app needs access to your photos to display and share them. Your privacy is important, we only access images you choose to interact with.',
   },
 
   // Camera and Microphone

@@ -8,7 +8,7 @@ export const _colors: Record<Theme, Record<ColorStates, string>> = {
     ...getColors('text-secondary', '100, 116, 139'),
     ...getColors('textSecondary', '100, 116, 139'),
 
-    ...getColors('bg', '248, 250, 252'),
+    ...getColors('bg', '220, 220, 255'),
     ...getColors('bg-secondary', '255, 255, 255'),
     ...getColors('bgSecondary', '255, 255, 255'),
 
