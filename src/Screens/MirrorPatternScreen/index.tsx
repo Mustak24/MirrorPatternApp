@@ -4,12 +4,12 @@ import HeaderSection from "./UI/HeaderSection";
 import PatterOptionsSection from "./UI/PatternOptionsSection";
 import { View } from "react-native";
 import PatternSection from "./UI/PatternSection";
-import { MirrorPatternProvider } from "./Store";
+import { Provider } from "./Context";
 
 
 export default function MirrorPatterScreen() {
     return (
-        <MirrorPatternProvider>
+        <Provider>
             <ThemeSafeArea 
                 className="w-full h-full"
                 containerProps={{className: 'h-full'}}
@@ -22,6 +22,6 @@ export default function MirrorPatterScreen() {
                 
                 <PatterOptionsSection/>
             </ThemeSafeArea>
-        </MirrorPatternProvider>
+        </Provider>
     )
 }

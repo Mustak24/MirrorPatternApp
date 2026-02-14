@@ -1,0 +1,50 @@
+import { RootStackParamList } from "@/Navigation/StackNavigators/Root/types";
+import { RouteProp, useRoute } from "@react-navigation/native";
+import { createContext, ReactNode, RefObject, useContext as _useContext, useRef, useState, Dispatch, SetStateAction } from "react";
+import { Patterns } from "../Const/patterns";
+import { View } from "react-native";
+
+
+const _CONTEXT = {
+    imagePath: {current: ''} as RefObject<string>,
+    selectedPattern: '2T-1' as Patterns,
+    setSelectedPattern: (() => {}) as Dispatch<SetStateAction<Patterns>>,
+    patternContainerRef: {current: null} as RefObject<View | null>,
+}
+
+const Context = createContext(_CONTEXT);
+
+
+function Provider({children}: {children: ReactNode}) {
+
+    const {imagePath: imagePathFromRoute} = useRoute<RouteProp<RootStackParamList, 'MirrorPattern'>>().params;
+
+    const imagePath = useRef(imagePathFromRoute);
+    const patternContainerRef = useRef<View | null>(null);
+
+    const [selectedPattern, setSelectedPattern] = useState<Patterns>(_CONTEXT.selectedPattern);
+
+    const states = {
+        imagePath,
+        selectedPattern,
+        setSelectedPattern,
+        patternContainerRef
+    }
+
+    return (
+        <Context.Provider value={states}>
+            {children}
+        </Context.Provider>
+    )
+}
+
+
+function useContext() {
+    return _useContext(Context);
+}
+
+
+export {
+    Provider,
+    useContext
+}

@@ -1,8 +1,19 @@
+import { navigationRef } from "@/Navigation";
 import { Button } from "@/Shared/Components/UI/Buttons";
+import usePermission from "@/Shared/Hooks/usePermission";
 import { ThemeText, ThemeView } from "@/Shared/Stores/Theme/Components";
 import { View } from "react-native";
 
 export default function HeaderSection() {
+
+    const { Modal, requestPermission } = usePermission({
+        permission: 'android.permission.CAMERA',
+        autoRequest: false,
+        onGrant: () => {
+            navigationRef.navigate('Camera');
+        }
+    })
+
     return (
         <ThemeView className="w-full gap-4">
             <View>
@@ -28,9 +39,11 @@ export default function HeaderSection() {
                     className="w-full"
                     startIcon="Camera"
                     title="Start With Camera"
-                    onPress={() => {}}
+                    onPress={requestPermission}
                 />
             </ThemeView>
+
+            <Modal/>
         </ThemeView>
     )
 }

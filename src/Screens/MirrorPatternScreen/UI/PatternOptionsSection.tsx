@@ -3,7 +3,7 @@ import Tile from "@/Shared/Components/UI/Tile";
 import { ThemeText, ThemeView } from "@/Shared/Stores/Theme/Components";
 import { Animated, FlatList, useAnimatedValue, View } from "react-native";
 import patterns, { PatternInfo } from "../Const/patterns";
-import { useMirrorPatternHandlers, useMirrorPatternStore } from "../Store";
+import { useContext } from "../Context";
 
 
 const patternsInfo = Object.entries(patterns);
@@ -11,7 +11,7 @@ const patternsInfo = Object.entries(patterns);
 
 export default function PatterOptionsSection() {
 
-    const selectPattern = useMirrorPatternStore(store => store.selectPattern);
+    const {selectedPattern} = useContext();
 
     return (
         <ThemeView 
@@ -22,8 +22,8 @@ export default function PatterOptionsSection() {
                 <View className="flex-row items-center justify-between gap-2" >
                     <ThemeText>Mirror Patters</ThemeText>
                     <ThemeText color="primary" >
-                        {selectPattern}
-                        {` (${patterns[selectPattern].size.join(' x ')} )`}
+                        {selectedPattern}
+                        {` (${patterns[selectedPattern].size.join(' x ')} )`}
                     </ThemeText>
                 </View>
 
@@ -46,9 +46,7 @@ export default function PatterOptionsSection() {
 
 function DrawPattern({patternInfo, size}: {patternInfo: PatternInfo, size: number}) {
 
-    const selectPattern = useMirrorPatternStore(store => store.selectPattern);
-
-    const {selectPattern: selectPatternHandler} = useMirrorPatternHandlers();
+    const {selectedPattern, setSelectedPattern} = useContext();
 
     const animatedScaleValue = useAnimatedValue(1);
 
@@ -68,7 +66,7 @@ function DrawPattern({patternInfo, size}: {patternInfo: PatternInfo, size: numbe
 
     function handleClick() {
         startScaleAnimation();
-        selectPatternHandler.set(patternInfo.id);
+        setSelectedPattern(patternInfo.id);
     }
 
     return (
@@ -78,7 +76,7 @@ function DrawPattern({patternInfo, size}: {patternInfo: PatternInfo, size: numbe
         >
             <PressableContainer 
                 onPress={handleClick}
-                color={selectPattern === patternInfo.id ? 'primary-20' : 'text-20'}
+                color={selectedPattern === patternInfo.id ? 'primary-20' : 'text-20'}
                 className="aspect-square w-20 rounded-lg overflow-hidden items-center justify-center gap-0"
             >
                 {
@@ -91,7 +89,7 @@ function DrawPattern({patternInfo, size}: {patternInfo: PatternInfo, size: numbe
                                     <Tile 
                                         key={index} 
                                         flip={flip}
-                                        isActive={selectPattern === patternInfo.id}
+                                        isActive={selectedPattern === patternInfo.id}
                                         width={patternInfo.size[1] === 1 ? size : size / 2}
                                         height={patternInfo.size[0] === 1 ? size : size / 2}
                                     />
