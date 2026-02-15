@@ -15,6 +15,7 @@ export default function PressableContainer({variant='soft', color='text', style,
     return (
         <RippleContainer
             {...props}
+            color={color}
             disabled={disabled}
             rippleScale={rippleScale}
             style={{

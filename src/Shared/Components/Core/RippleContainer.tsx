@@ -21,8 +21,8 @@ export default function RippleContainer({children, style, onPress, color='text',
 
   const {top, left} = useSafeAreaInsets();
   
-  const rgb = useThemeStore(s => s.colors[color]);
-  rippleColor ??= `rgb(${rgb})`;
+  const _rippleColor = useThemeStore(s => s.colors[color]);
+  rippleColor ??= _rippleColor;
     
   const [position, setPosition] = useState<{top: number, left: number}>({top: 0, left: 0});
 

@@ -1,36 +1,37 @@
 import { Image, View } from "react-native";
 import { CenterModal } from "../../Core/Modals";
 import { CenterModalProps } from "../../Core/Modals/CenterModal";
-import { Button } from "../Buttons";
+import { IconButton } from "../Buttons";
+import { ThemeView } from "@/Shared/Stores/Theme/Components";
 
 
 export type PatternPreviewModalProps = Omit<CenterModalProps, 'children'> & {
     imagePath: string;
 }
 
-export default function PatternPreviewModal({imagePath, setVisible, ...props}: PatternPreviewModalProps) {
+export default function PatternPreviewModal({imagePath, ...props}: PatternPreviewModalProps) {
     return (
-        <CenterModal {...props} setVisible={setVisible}>
+        <CenterModal {...props}>
             <View className="w-full gap-5" >
                 <View className="w-full aspect-square rounded-[8px] overflow-hidden" >
                     <Image source={{uri: imagePath}} className="w-full h-full object-cover" />
                 </View>
 
-                <View className="flex-row items-center justify-end gap-4" >
-                    <Button
-                        title="Share"
-                        startIcon="Share2"
+                <ThemeView color="bg-80" className="absolute top-[2px] right-[2px] flex-row items-center justify-end gap-2 rounded-[8px] p-1" >
+                    <IconButton
+                        icon="Share2"
                         color="primary"
-                        rounded={8}
+                        rounded={4}
                     />
 
-                    <Button
-                        title="Close"
+                    <IconButton
+                        icon="X"
                         color="text"
-                        onPress={() => setVisible(false)}
-                        rounded={8}
+                        rounded={4}
+                        onPress={() => props.setVisible(false)}
+                        
                     />
-                </View>
+                </ThemeView>
             </View>
         </CenterModal>
     )

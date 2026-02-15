@@ -1,3 +1,4 @@
+import UserNameModal from "@/Shared/Components/UI/Modals/UserNameModal";
 import HeaderSection from "./UI/HeaderSection";
 import MyDesignsSection from "./UI/MyDesignsSection";
 import ThemeSafeArea from "@/Shared/Stores/Theme/Components/ThemeSafeArea";

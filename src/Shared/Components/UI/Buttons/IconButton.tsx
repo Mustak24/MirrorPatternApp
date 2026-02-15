@@ -23,7 +23,7 @@ export default function IconButton({variant='soft', color='primary', icon, size=
     const {color: textColor, ...style} = getButtonStyle(variant, color);
 
     const height = typeof size === 'number' ? size : BUTTON_LAYOUT[size].height;
-    const borderWidth = typeof size === 'number' ? 1 : BUTTON_LAYOUT[size].borderWidth;
+    const borderWidth = !variant.includes('outline') ? 0 : typeof size === 'number' ? 1 : BUTTON_LAYOUT[size].borderWidth;
     return (
         <RippleContainer {...props}
             disabled={disabled}

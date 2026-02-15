@@ -3,6 +3,7 @@ import Icon from "@/Shared/Components/Core/Icon";
 import ShowWhen from "@/Shared/Components/Core/ShowWhen";
 import { Button } from "@/Shared/Components/UI/Buttons";
 import PressableContainer from "@/Shared/Components/UI/Buttons/PressableContainer";
+import Loader from "@/Shared/Components/UI/Loader";
 import PatternPreviewModal from "@/Shared/Components/UI/Modals/PatternPreviewModal";
 import useImagePicker from "@/Shared/Hooks/useImagePicker";
 import { ThemeText, ThemeView } from "@/Shared/Stores/Theme/Components";
@@ -60,56 +61,72 @@ export default function MyDesignsSection() {
                 </ShowWhen>
             </View>
 
-            <FlatList
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                className="w-full"
-                contentContainerClassName="gap-4 w-full"
+            <View className="relative" >
+                <FlatList
+                    horizontal
+                    showsHorizontalScrollIndicator={false}
+                    
+                    className="w-full rounded-xl"
+                    contentContainerClassName="flex-row items-center gap-4 flex-wrap"
 
-                data={designs}
-                keyExtractor={item => item.uri}
-                renderItem={({item}) => (
-                    <PressableContainer
-                        className="aspect-square w-32 rounded-[12px] overflow-hidden relative" 
-                        color="bg-secondary"
-                        onPress={() => {
-                            previewPatternPath.current = item.uri;
-                            setIsPatternPreviewModalVisible(true);
-                        }}
-                    >
-                        <Image
-                            source={{uri: item.uri}}
-                            className="w-full h-full object-cover"
-                        />
-                    </PressableContainer>
-                )}
+                    data={designs}
+                    keyExtractor={item => item.uri}
+                    
+                    renderItem={({item}) => (
+                        <PressableContainer
+                            className="aspect-square w-32 rounded-[12px] overflow-hidden relative" 
+                            color="bg-secondary"
+                            onPress={() => {
+                                previewPatternPath.current = item.uri;
+                                setIsPatternPreviewModalVisible(true);
+                            }}
+                        >
+                            <Image
+                                source={{uri: item.uri}}
+                                className="w-full h-full object-cover"
+                            />
+                        </PressableContainer>
+                    )}
 
-                ListFooterComponent={
-                    <PressableContainer 
-                        color="bg-secondary" 
-                        variant="soft-outlined" 
-                        className="aspect-square w-32 rounded-[12px] overflow-hidden items-center justify-center gap-2" 
-                        onPress={openImagePicker}
-                    >
-                        <Icon
-                            name="Image"
-                            size={40}
-                            color="text-secondary"
-                        />
-                        <ThemeText color="text-secondary" className="font-semibold" >
-                            {designs.length < 10 ? 'Create New' : 'See All'}
-                        </ThemeText>
-                    </PressableContainer>
-                }
+                    ListFooterComponent={
+                        <ShowWhen when={!!designs.length}>
+                            <PressableContainer 
+                                color="bg-secondary" 
+                                variant="soft-outlined" 
+                                className="aspect-square w-32 rounded-[12px] overflow-hidden items-center justify-center gap-2" 
+                                onPress={openImagePicker}
+                            >
+                                <Icon
+                                    name="Image"
+                                    size={40}
+                                    color="text-secondary"
+                                />
+                                <ThemeText color="text-secondary" className="font-semibold" >
+                                    {designs.length < 10 ? 'Create New' : 'See All'}
+                                </ThemeText>
+                            </PressableContainer>
+                        </ShowWhen>
+                    }
 
-                ListEmptyComponent={
-                    <View className="flex-row gap-4 w-full h-32" >
-                        <ThemeView color="bg-secondary" className="w-full h-full rounded-[12px] items-center justify-center" >
-                            <ThemeText color="text-secondary" >{loading ? 'Loading...' : 'No Designs Found'}</ThemeText>
+                />
+
+                <View className="absolute h-full w-full rounded-xl overflow-hidden" style={{display: !designs.length ? 'none' : 'flex'}} >
+                    <PressableContainer color="bg-secondary" variant="solid" className="w-full h-full items-center justify-center gap-1" >
+                        <ShowWhen when={!loading} 
+                            otherwise={<Loader size={40} color="text-secondary" />}
+                        >
+                            <Icon name="ImageOff" size={40} color="text-secondary" />
+                        </ShowWhen>
+                        <ThemeView color="bg-secondary" className="w-full rounded-[12px] items-center justify-center" >
+                            <ThemeText color="text-secondary" >
+                                <ShowWhen when={!loading} otherwise="Finding Designs..." >
+                                    No Designs Found
+                                </ShowWhen>
+                            </ThemeText>
                         </ThemeView>
-                    </View>
-                }
-            />
+                    </PressableContainer>
+                </View>
+            </View>
 
             <Modal/>
             <PatternPreviewModal

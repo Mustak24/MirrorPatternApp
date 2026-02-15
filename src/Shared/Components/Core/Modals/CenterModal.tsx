@@ -17,9 +17,9 @@ export type CenterModalProps = Omit<ModalProps, 'animationType'> & {
 }
 
 
-export default function CenterModal({children, visible, setVisible, preventCloseRequest=false, onRequestClose, style, containerProps, backdropColor: backdropVariant='text', ...props}: CenterModalProps) {
+export default function CenterModal({children, visible, setVisible, preventCloseRequest=false, onRequestClose, style, containerProps, backdropColor: backdropVariant='bg-secondary-90', ...props}: CenterModalProps) {
 
-    const backdropColor = useThemeStore(states => states.colors[backdropVariant].replace(')', ', 0.8)'));
+    const backdropColor = useThemeStore(states => states.colors[backdropVariant]);
 
     const {width: windowWidth, height: windowHeight} = useWindowDimensions();
 

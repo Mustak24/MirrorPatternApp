@@ -1,18 +1,21 @@
 import { navigationRef } from "@/Navigation";
 import { Button, IconButton } from "@/Shared/Components/UI/Buttons";
 import useImagePicker from "@/Shared/Hooks/useImagePicker";
-import usePermission from "@/Shared/Hooks/usePermission";
+import { useAppStore } from "@/Shared/Stores/App";
 import { useThemeStore } from "@/Shared/Stores/Theme";
 import { ThemeText, ThemeView } from "@/Shared/Stores/Theme/Components";
-import { Platform, ToastAndroid, View } from "react-native";
-import ImageCropPicker, { openCropper } from "react-native-image-crop-picker";
+import { View } from "react-native";
 
 export default function HeaderSection() {
+
+    const userName = useAppStore(store => store.userName);
+
     return (
         <ThemeView className="w-full gap-5 py-1">
             <View className="flex-row items-center gap-2 justify-between" > 
                 <View>
-                    <ThemeText color="text" className="text-xl font-bold" >Welcome back,</ThemeText>
+                    <ThemeText color="text-secondary" className="text font-semibold" >Welcome back,</ThemeText>
+                    <ThemeText className="text-xl font-bold" >{userName}</ThemeText>
                 </View>
 
                 <IconButton

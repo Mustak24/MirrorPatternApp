@@ -1,8 +1,9 @@
+import { APP_SHARE_INFO, GITHUB_URL, PLAY_STORE_URL } from "@/Shared/Assets/Consts/app";
 import Icon from "@/Shared/Components/Core/Icon";
 import PressableContainer from "@/Shared/Components/UI/Buttons/PressableContainer";
 import { useThemeHandlers, useThemeStore } from "@/Shared/Stores/Theme";
 import { ThemeText } from "@/Shared/Stores/Theme/Components";
-import { Switch, View } from "react-native";
+import { Linking, Share, Switch, View } from "react-native";
 
 export default function OtherInfoSection() {
 
@@ -14,6 +15,8 @@ export default function OtherInfoSection() {
 
     return (
          <View className="w-full gap-4" >
+            <ThemeText color="text-secondary" className="text-lg font-bold" >Other Info</ThemeText>
+
             <PressableContainer color="bg-secondary" className="flex-row items-center gap-4 w-full p-4 rounded-xl" >
                 <Icon name="Moon" size={24} color="text" />
                 <ThemeText className="text-lg font-bold" >Dark Mode</ThemeText>
@@ -28,14 +31,18 @@ export default function OtherInfoSection() {
                 </View>
             </PressableContainer>
 
-            <PressableContainer color="primary" className="flex-row items-center gap-4 w-full p-4 rounded-xl" >
+            <PressableContainer color="primary" className="flex-row items-center gap-4 w-full p-4 rounded-xl" 
+                onPress={() => Linking.openURL(PLAY_STORE_URL)}
+            >
                 <Icon name="Star" size={24} color="primary"  />
                 <ThemeText color="primary" className="text-lg font-bold" >
                     Rate us on Google Play Store
                 </ThemeText>
             </PressableContainer>
 
-            <PressableContainer color="warning" className="flex-row items-center gap-4 w-full p-4 rounded-xl" >
+            <PressableContainer color="warning" className="flex-row items-center gap-4 w-full p-4 rounded-xl" 
+                onPress={() => Share.share(APP_SHARE_INFO)}
+            >
                 <Icon name="Share2" size={24} color="warning"  />
                 <ThemeText color="warning" className="text-lg font-bold" >
                     Share App
@@ -49,7 +56,9 @@ export default function OtherInfoSection() {
                 </ThemeText>
             </PressableContainer>
 
-            <PressableContainer color="bg-secondary" className="gap-2 w-full p-4 rounded-xl" >
+            <PressableContainer color="bg-secondary" className="gap-2 w-full p-4 rounded-xl" 
+                onPress={() => Linking.openURL(GITHUB_URL)}
+            >
                 <ThemeText color="text-secondary" className="text-lg font-bold" >
                     OPEN SOURCE
                 </ThemeText>

@@ -1,6 +1,6 @@
 import { Theme, ColorStates, ColorStateNames, ColorShades } from './types';
 
-export const _theme: Theme = 'dark';
+export const _theme: Theme = 'light';
 
 export const _colors: Record<Theme, Record<ColorStates, string>> = {
   light: {
