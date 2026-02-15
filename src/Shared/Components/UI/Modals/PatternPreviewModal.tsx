@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Image, View } from "react-native";
 import { CenterModal } from "../../Core/Modals";
 import { CenterModalProps } from "../../Core/Modals/CenterModal";
 import { IconButton } from "../Buttons";
 import { ThemeView } from "@/Shared/Stores/Theme/Components";
+import Share from "react-native-share";
+import RNFS from 'react-native-fs';
 
 
 export type PatternPreviewModalProps = Omit<CenterModalProps, 'children'> & {
@@ -10,6 +13,31 @@ export type PatternPreviewModalProps = Omit<CenterModalProps, 'children'> & {
 }
 
 export default function PatternPreviewModal({imagePath, ...props}: PatternPreviewModalProps) {
+
+    const [isShareLoading, setIsShareLoading] = useState(false);
+
+    async function handleShare() {
+        try {
+            setIsShareLoading(true);
+
+            const destPath = `${RNFS.CachesDirectoryPath}/shared_pattern.jpg`;
+            await RNFS.copyFile(imagePath, destPath);
+
+            const url = `file://${destPath}`;
+            console.log('imagePath', url)
+            await Share.open({
+                url,
+                type: 'image/*',
+                failOnCancel: false,
+                
+            });
+        } catch(e) {
+            console.log('Error during share pattern: ', e)
+        } finally {
+            setIsShareLoading(false);
+        }
+    }
+
     return (
         <CenterModal {...props}>
             <View className="w-full gap-5" >
@@ -22,6 +50,8 @@ export default function PatternPreviewModal({imagePath, ...props}: PatternPrevie
                         icon="Share2"
                         color="primary"
                         rounded={4}
+                        onPress={handleShare}
+                        loading={isShareLoading}
                     />
 
                     <IconButton

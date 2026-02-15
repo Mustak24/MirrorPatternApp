@@ -26,15 +26,15 @@ export default function MyDesignsSection() {
     async function getDesigns() {
         try {
             setLoading(true);
+            setDesigns([]);
 
             const assets = await CameraRoll.getPhotos({
                 first: 10,
                 assetType: 'Photos',
                 groupName: 'Mirror Patterns',
             });
-
-            setDesigns(assets.edges.map(e => e.node.image));
             
+            setDesigns(assets.edges.map(e => e.node.image));
         } catch(e) {
             console.error('failed to load designs', e)
         } finally {
@@ -71,7 +71,7 @@ export default function MyDesignsSection() {
 
                     data={designs}
                     keyExtractor={item => item.uri}
-                    
+
                     renderItem={({item}) => (
                         <PressableContainer
                             className="aspect-square w-32 rounded-[12px] overflow-hidden relative" 
@@ -110,16 +110,21 @@ export default function MyDesignsSection() {
 
                 />
 
-                <View className="absolute h-full w-full rounded-xl overflow-hidden" style={{display: !designs.length ? 'none' : 'flex'}} >
+                <View className="absolute h-full w-full rounded-xl overflow-hidden" 
+                    style={{display: !!designs.length ? 'none' : 'flex'}} 
+                >
                     <PressableContainer color="bg-secondary" variant="solid" className="w-full h-full items-center justify-center gap-1" >
                         <ShowWhen when={!loading} 
                             otherwise={<Loader size={40} color="text-secondary" />}
                         >
                             <Icon name="ImageOff" size={40} color="text-secondary" />
                         </ShowWhen>
+
                         <ThemeView color="bg-secondary" className="w-full rounded-[12px] items-center justify-center" >
                             <ThemeText color="text-secondary" >
-                                <ShowWhen when={!loading} otherwise="Finding Designs..." >
+                                <ShowWhen when={!loading} 
+                                    otherwise="Finding Designs..." 
+                                >
                                     No Designs Found
                                 </ShowWhen>
                             </ThemeText>
