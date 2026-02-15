@@ -1,97 +1,212 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Mirror Pattern App
 
-# Getting Started
+A creative React Native mobile application that transforms photos into stunning mirror pattern designs. Capture or select images and instantly create beautiful kaleidoscope-style symmetrical patterns.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+## ✨ Features
 
-## Step 1: Start Metro
+- 📸 **Camera Integration** - Capture photos directly from the app using the device camera
+- 🖼️ **Gallery Access** - Select images from your device's photo gallery
+- 🎨 **Mirror Pattern Generation** - Create beautiful symmetrical patterns from any image
+- 💾 **Save & Share** - Save your created patterns to your device
+- 🎯 **My Designs** - View and manage all your saved pattern designs
+- ⚙️ **Settings** - Customize app preferences and manage permissions
+- 🔒 **Privacy Policy** - Built-in privacy policy page
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## 📱 Screenshots
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+_Transform any photo into mesmerizing mirror patterns with just a tap!_
 
-```sh
-# Using npm
-npm start
+## 🚀 Getting Started
 
-# OR using Yarn
-yarn start
+### Prerequisites
+
+Before you begin, ensure you have:
+
+- **Node.js** >= 22.11.0
+- **React Native development environment** set up ([Setup Guide](https://reactnative.dev/docs/set-up-your-environment))
+- **Android Studio** (for Android development)
+- **Xcode** (for iOS development on macOS)
+
+### Installation
+
+1. **Clone the repository**
+
+   ```bash
+   git clone <repository-url>
+   cd MirrorPatternApp
+   ```
+
+2. **Install dependencies**
+
+   ```bash
+   npm install
+   ```
+
+3. **iOS Setup** (macOS only)
+
+   ```bash
+   # Install Ruby bundler
+   bundle install
+
+   # Install CocoaPods dependencies
+   cd ios
+   bundle exec pod install
+   cd ..
+   ```
+
+### Running the App
+
+1. **Start Metro bundler**
+
+   ```bash
+   npm start
+   ```
+
+2. **Run on Android**
+
+   ```bash
+   npm run android
+   ```
+
+3. **Run on iOS**
+   ```bash
+   npm run ios
+   ```
+
+## 🛠️ Tech Stack
+
+### Core Technologies
+
+- **React Native** 0.84.0 - Cross-platform mobile framework
+- **React** 19.2.3 - UI library
+- **TypeScript** 5.9.3 - Type-safe development
+
+### Navigation & UI
+
+- **React Navigation** - Native stack navigation
+- **NativeWind** 4.2.1 - Tailwind CSS for React Native
+- **Lucide React Native** - Beautiful icon set
+- **React Native Gesture Handler** - Smooth gesture interactions
+- **React Native Safe Area Context** - Safe area management
+
+### Image Processing & Camera
+
+- **React Native Vision Camera** 4.7.3 - Advanced camera functionality
+- **React Native Image Crop Picker** - Image selection and cropping
+- **React Native View Shot** - Capture and save component screenshots
+- **React Native SVG** - SVG rendering support
+
+### Storage & State Management
+
+- **React Native MMKV** - Fast, efficient key-value storage
+- **@funtools/store** - Lightweight state management
+- **@react-native-camera-roll/camera-roll** - Gallery access
+
+### Performance
+
+- **React Native Nitro Modules** - High-performance native modules
+
+## 📂 Project Structure
+
+```
+MirrorPatternApp/
+├── src/
+│   ├── App.tsx                    # Root application component
+│   ├── Navigation/                # Navigation configuration
+│   ├── Screens/                   # Application screens
+│   │   ├── CameraScreen/         # Camera capture screen
+│   │   ├── HomeScreen/           # Main home screen with designs
+│   │   ├── MirrorPatternScreen/  # Pattern creation & preview
+│   │   └── SettingScreen/        # App settings
+│   └── Shared/                    # Shared components, utilities, stores
+├── static/                        # Static assets (privacy policy, etc.)
+├── android/                       # Android native code
+├── ios/                          # iOS native code
+└── global.css                    # Global styles
 ```
 
-## Step 2: Build and run your app
+## 🎯 How to Use
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+1. **Launch the App** - Open the Mirror Pattern App on your device
+2. **Choose an Image Source**:
+   - Tap the camera icon to capture a new photo
+   - Select an existing image from your gallery
+3. **Create Pattern** - The app automatically generates a mirror pattern from your image
+4. **Save Your Design** - Save your creation to your device
+5. **View My Designs** - Access all your saved patterns from the home screen
 
-### Android
+## ⚙️ Development
 
-```sh
-# Using npm
+### Available Scripts
+
+```bash
+npm start          # Start Metro bundler
+npm run android    # Run on Android device/emulator
+npm run ios        # Run on iOS device/simulator
+npm run lint       # Run ESLint
+npm test          # Run tests
+```
+
+### Code Style
+
+This project uses:
+
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **TypeScript** - Type checking
+
+## 📋 Permissions
+
+The app requires the following permissions:
+
+- **Camera** - To capture photos for pattern creation
+- **Photo Library** - To access and save images
+- **Storage** - To save generated patterns
+
+## 🔧 Troubleshooting
+
+### Metro Bundler Issues
+
+```bash
+# Clear cache and restart
+npm start -- --reset-cache
+```
+
+### Android Build Issues
+
+```bash
+cd android
+./gradlew clean
+cd ..
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
-### iOS
+### iOS Build Issues
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
-```
-
-Then, and every time you update your native dependencies, run:
-
-```sh
+```bash
+cd ios
 bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+cd ..
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+For more help, see the [React Native Troubleshooting Guide](https://reactnative.dev/docs/troubleshooting).
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+## 📄 License
 
-## Step 3: Modify your app
+This project is private and proprietary.
 
-Now that you have successfully run the app, let's make changes!
+## 🤝 Contributing
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+This is a private project. For any questions or suggestions, please contact the project maintainer.
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+## 📚 Learn More
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+- [React Native Documentation](https://reactnative.dev)
+- [React Navigation](https://reactnavigation.org)
+- [NativeWind](https://www.nativewind.dev)
+- [React Native Vision Camera](https://react-native-vision-camera.com)
 
-## Congratulations! :tada:
+---
 
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+**Made with ❤️ using React Native**
