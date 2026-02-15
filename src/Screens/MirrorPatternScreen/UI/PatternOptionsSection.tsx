@@ -46,7 +46,7 @@ export default function PatterOptionsSection() {
 
 function DrawPattern({patternInfo, size}: {patternInfo: PatternInfo, size: number}) {
 
-    const {selectedPattern, setSelectedPattern} = useContext();
+    const {selectedPattern, setSelectedPattern, isPatternSaving} = useContext();
 
     const animatedScaleValue = useAnimatedValue(1);
 
@@ -76,6 +76,7 @@ function DrawPattern({patternInfo, size}: {patternInfo: PatternInfo, size: numbe
         >
             <PressableContainer 
                 onPress={handleClick}
+                disabled={isPatternSaving}
                 color={selectedPattern === patternInfo.id ? 'primary-20' : 'text-20'}
                 className="aspect-square w-20 rounded-lg overflow-hidden items-center justify-center gap-0"
             >

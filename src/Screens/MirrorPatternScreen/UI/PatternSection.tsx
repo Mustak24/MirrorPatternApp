@@ -20,7 +20,7 @@ export default function PatternSection() {
     }, []);
 
     return (
-        <View ref={patternContainerRef} className="w-full aspect-square items-center justify-center rounded-2xl overflow-hidden">
+        <View ref={patternContainerRef} className="w-full aspect-square items-center justify-center overflow-hidden">
             <ThemeView color="bg-secondary" className="w-full h-full">
                 {
                     pattern.map((rows, index) => (

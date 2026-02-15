@@ -6,6 +6,8 @@ import { captureRef } from "react-native-view-shot";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import usePermission from "@/Shared/Hooks/usePermission";
 import { navigationRef } from "@/Navigation";
+import PatternPreviewModal from "@/Shared/Components/UI/Modals/PatternPreviewModal";
+import { useRef, useState } from "react";
 
 
 
@@ -17,24 +19,38 @@ const PERMISSION_NAME = (Platform.OS === 'android' && Platform.Version >= 33) ? 
 
 export default function HeaderSection() {
 
-    const {patternContainerRef} = useContext();
+    const {patternContainerRef, isPatternSaving, setIsPatternSaving} = useContext();
 
     const {Modal, requestPermission: processSave} = usePermission({
         permission: PERMISSION_NAME,
         onGrant: handleSave,
-    })
+    });
+
+    const previewPatternPath = useRef('');
+    const [isPatternPreviewModalVisible, setIsPatternPreviewModalVisible] = useState(false);
 
     async function handleSave() {
         if(!patternContainerRef.current) return;
 
-        const pattern = await captureRef(patternContainerRef, {format: 'jpg', quality: 1});
+        try {
+            setIsPatternSaving(true);
+            
+            const pattern = await captureRef(patternContainerRef, {format: 'jpg', quality: 1});
+            
+            await CameraRoll.saveAsset(pattern, {
+                type: 'photo',
+                album: 'Mirror Patterns'
+            });
+            
+            previewPatternPath.current = pattern;
+            setIsPatternPreviewModalVisible(true);
         
-        await CameraRoll.saveAsset(pattern, {
-            type: 'photo',
-            album: 'Mirror Patterns'
-        });
+        } catch(e) {
+            console.error('Error during Save Pattern: ', e);
+        } finally {
+            setIsPatternSaving(false)
+        }
 
-        navigationRef.navigate('Home');
     }
 
     return (
@@ -47,10 +63,17 @@ export default function HeaderSection() {
                     title="Save"
                     rounded={1000}
                     onPress={processSave}
+                    loading={isPatternSaving}
                 />
             </View>
 
             <Modal/>
+            
+            <PatternPreviewModal
+                imagePath={previewPatternPath.current}
+                visible={isPatternPreviewModalVisible}
+                setVisible={setIsPatternPreviewModalVisible}
+            />
         </EntityHeader>
     )
 }

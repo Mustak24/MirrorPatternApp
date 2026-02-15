@@ -1,16 +1,26 @@
+import { navigationRef } from "@/Navigation";
 import Icon from "@/Shared/Components/Core/Icon";
 import ShowWhen from "@/Shared/Components/Core/ShowWhen";
 import { Button } from "@/Shared/Components/UI/Buttons";
 import PressableContainer from "@/Shared/Components/UI/Buttons/PressableContainer";
+import PatternPreviewModal from "@/Shared/Components/UI/Modals/PatternPreviewModal";
+import useImagePicker from "@/Shared/Hooks/useImagePicker";
 import { ThemeText, ThemeView } from "@/Shared/Stores/Theme/Components";
 import { CameraRoll, PhotoIdentifier } from "@react-native-camera-roll/camera-roll";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FlatList, Image, View } from "react-native";
 
 export default function MyDesignsSection() {
 
+    const {openImagePicker, Modal} = useImagePicker((imagePath) => {
+        navigationRef.navigate('MirrorPattern', {imagePath});
+    })
+
     const [loading, setLoading] = useState(true);
     const [designs, setDesigns] = useState<Array<PhotoIdentifier['node']['image']>>([]);
+
+    const previewPatternPath = useRef('');
+    const [isPatternPreviewModalVisible, setIsPatternPreviewModalVisible] = useState(false);
 
     async function getDesigns() {
         try {
@@ -59,16 +69,28 @@ export default function MyDesignsSection() {
                 data={designs}
                 keyExtractor={item => item.uri}
                 renderItem={({item}) => (
-                    <View className="aspect-square w-32 rounded-[12px] overflow-hidden relative" >
+                    <PressableContainer
+                        className="aspect-square w-32 rounded-[12px] overflow-hidden relative" 
+                        color="bg-secondary"
+                        onPress={() => {
+                            previewPatternPath.current = item.uri;
+                            setIsPatternPreviewModalVisible(true);
+                        }}
+                    >
                         <Image
                             source={{uri: item.uri}}
                             className="w-full h-full object-cover"
                         />
-                    </View>
+                    </PressableContainer>
                 )}
 
                 ListFooterComponent={
-                    <PressableContainer color="bg-secondary" variant="soft-outlined" className="aspect-square w-32 rounded-[12px] overflow-hidden items-center justify-center gap-2" >
+                    <PressableContainer 
+                        color="bg-secondary" 
+                        variant="soft-outlined" 
+                        className="aspect-square w-32 rounded-[12px] overflow-hidden items-center justify-center gap-2" 
+                        onPress={openImagePicker}
+                    >
                         <Icon
                             name="Image"
                             size={40}
@@ -87,6 +109,14 @@ export default function MyDesignsSection() {
                         </ThemeView>
                     </View>
                 }
+            />
+
+            <Modal/>
+            <PatternPreviewModal
+                imagePath={previewPatternPath.current}
+
+                visible={isPatternPreviewModalVisible}
+                setVisible={setIsPatternPreviewModalVisible}
             />
         </ThemeView>
     )

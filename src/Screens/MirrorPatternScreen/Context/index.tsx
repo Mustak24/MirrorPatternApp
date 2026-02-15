@@ -7,9 +7,14 @@ import { View } from "react-native";
 
 const _CONTEXT = {
     imagePath: {current: ''} as RefObject<string>,
+    
     selectedPattern: '2T-1' as Patterns,
     setSelectedPattern: (() => {}) as Dispatch<SetStateAction<Patterns>>,
+    
     patternContainerRef: {current: null} as RefObject<View | null>,
+
+    isPatternSaving: false,
+    setIsPatternSaving: (() => {}) as Dispatch<SetStateAction<boolean>>,
 }
 
 const Context = createContext(_CONTEXT);
@@ -23,12 +28,18 @@ function Provider({children}: {children: ReactNode}) {
     const patternContainerRef = useRef<View | null>(null);
 
     const [selectedPattern, setSelectedPattern] = useState<Patterns>(_CONTEXT.selectedPattern);
+    const [isPatternSaving, setIsPatternSaving] = useState(false);
 
     const states = {
         imagePath,
+        
         selectedPattern,
         setSelectedPattern,
-        patternContainerRef
+        
+        patternContainerRef,
+
+        isPatternSaving,
+        setIsPatternSaving
     }
 
     return (

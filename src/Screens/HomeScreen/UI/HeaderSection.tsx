@@ -1,5 +1,6 @@
 import { navigationRef } from "@/Navigation";
 import { Button, IconButton } from "@/Shared/Components/UI/Buttons";
+import useImagePicker from "@/Shared/Hooks/useImagePicker";
 import usePermission from "@/Shared/Hooks/usePermission";
 import { useThemeStore } from "@/Shared/Stores/Theme";
 import { ThemeText, ThemeView } from "@/Shared/Stores/Theme/Components";
@@ -42,55 +43,13 @@ export default function HeaderSection() {
 }
 
 
-
-const MEDIA_PERMISSION_NAME = (Platform.OS === 'android' && Platform.Version >= 33) ? (
-        'android.permission.READ_MEDIA_IMAGES'
-    ) : (
-        'android.permission.READ_EXTERNAL_STORAGE'
-);
-
 function ActionButtons() {
 
     const textColor = useThemeStore(store => store.colors.text);
 
-    const {requestPermission: processContinueByImage, Modal} = usePermission({
-        permission: MEDIA_PERMISSION_NAME,
-        onGrant: handleContinueByImage
-    })
-
-    async function handleContinueByImage() {
-        try {
-            const image = await ImageCropPicker.openPicker({
-                mediaType: 'photo',
-                compressImageQuality: 1
-            })
-
-            const cropImage = await openCropper({
-                cropperToolbarTitle: 'Crop Image',
-                cropperTintColor: textColor,
-                path: image.path,
-                mediaType: 'photo',
-                compressImageQuality: 1,
-                width: 400,
-                height: 400,
-            })
-
-            if(cropImage.path) {
-                navigationRef.navigate('MirrorPattern', {imagePath: cropImage.path});
-                return;
-            }
-            
-            ToastAndroid.showWithGravity(
-                'Image not selected',
-                ToastAndroid.BOTTOM,
-                ToastAndroid.SHORT
-            )
-
-        } catch(e) {
-            console.error('Error in continue by image', e)
-        }
-        
-    }
+    const {openImagePicker, Modal} = useImagePicker((imagePath) => {
+        navigationRef.navigate('MirrorPattern', {imagePath});
+    });
 
     return (
         <>
@@ -105,7 +64,7 @@ function ActionButtons() {
                 className="w-full"
                 startIcon="ImagePlus"
                 title="Continue by Select Image"
-                onPress={processContinueByImage}
+                onPress={openImagePicker}
                 variant="outlined"
             />
 
