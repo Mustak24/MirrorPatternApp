@@ -16,8 +16,7 @@ export default function CameraWindow({children}: {children: ReactNode}) {
 
     const {isFlashOn, cameraRef, toggleFlash} = useCameraContext();
 
-    async function takePicture() {
-        console.log(cameraRef)    
+    async function takePicture() {   
         if(!cameraRef.current) return;
 
         const photo = await cameraRef.current.takePhoto({

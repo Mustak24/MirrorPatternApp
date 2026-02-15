@@ -24,15 +24,15 @@ export default function PatternPreviewModal({imagePath, ...props}: PatternPrevie
             await RNFS.copyFile(imagePath, destPath);
 
             const url = `file://${destPath}`;
-            console.log('imagePath', url)
             await Share.open({
                 url,
                 type: 'image/*',
                 failOnCancel: false,
                 
             });
+
         } catch(e) {
-            console.log('Error during share pattern: ', e)
+            console.error('Error during share pattern: ', e)
         } finally {
             setIsShareLoading(false);
         }

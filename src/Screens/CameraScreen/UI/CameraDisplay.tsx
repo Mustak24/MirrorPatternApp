@@ -22,8 +22,6 @@ export default function CameraDisplay() {
 
     const device = useCameraDevices().find(d => d.position === 'back');
 
-    console.log(permissionStatus)
-
     return (
         <Fragment>
             <ShowWhen when={permissionStatus === 'granted'} >

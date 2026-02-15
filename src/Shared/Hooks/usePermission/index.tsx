@@ -20,7 +20,6 @@ export default function usePermission({ permission, autoRequest = false, onDeny,
 
 
     async function requestPermission() {
-        console.log('requesting permission');
         if(Platform.OS !== 'android') return;
 
         try {
@@ -29,7 +28,7 @@ export default function usePermission({ permission, autoRequest = false, onDeny,
 
             handlePermission(result);
         } catch (error) {
-            console.log(error);
+            console.error(error);
             setIsModalVisible(false);
         }
     }
