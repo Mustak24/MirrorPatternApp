@@ -1,4 +1,4 @@
-import { APP_SHARE_INFO, GITHUB_URL, PLAY_STORE_URL } from "@/Shared/Assets/Consts/app";
+import { APP_SHARE_INFO, GITHUB_URL, PLAY_STORE_URL, PRIVACY_POLICY_URL } from "@/Shared/Assets/Consts/app";
 import Icon from "@/Shared/Components/Core/Icon";
 import PressableContainer from "@/Shared/Components/UI/Buttons/PressableContainer";
 import { useThemeHandlers, useThemeStore } from "@/Shared/Stores/Theme";
@@ -49,7 +49,9 @@ export default function OtherInfoSection() {
                 </ThemeText>
             </PressableContainer>
 
-            <PressableContainer color="bg-secondary" className="flex-row items-center gap-4 w-full p-4 rounded-xl" >
+            <PressableContainer color="bg-secondary" className="flex-row items-center gap-4 w-full p-4 rounded-xl" 
+                onPress={() => Linking.openURL(PRIVACY_POLICY_URL)}
+            >
                 <Icon name="FileText" size={24}/>
                 <ThemeText className="text-lg font-bold" >
                     Privacy Policy

@@ -16,11 +16,12 @@
       }
 
       body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
-          Oxygen, Ubuntu, Cantarell, sans-serif;
-        line-height: 1.6;
-        color: #333;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+          'Helvetica Neue', Arial, sans-serif, 'Apple Color Emoji',
+          'Segoe UI Emoji';
+        line-height: 1.75;
+        color: #24292f;
+        background: #f6f8fa;
         min-height: 100vh;
         padding: 20px;
       }
@@ -28,117 +29,136 @@
       .container {
         max-width: 900px;
         margin: 0 auto;
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        padding: 40px;
-        border-radius: 20px;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        background: #ffffff;
+        padding: 48px 64px;
+        border-radius: 6px;
+        border: 1px solid #d0d7de;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
       }
 
       h1 {
-        color: #667eea;
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-        text-align: center;
-        font-weight: 700;
+        color: #24292f;
+        font-size: 2em;
+        margin-bottom: 0.5em;
+        padding-bottom: 0.3em;
+        border-bottom: 1px solid #d0d7de;
+        font-weight: 600;
+        line-height: 1.25;
       }
 
       .app-name {
-        text-align: center;
-        color: #764ba2;
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-        font-weight: 500;
+        color: #57606a;
+        font-size: 1.1rem;
+        margin-bottom: 0.5em;
+        font-weight: 400;
       }
 
       .last-updated {
-        text-align: center;
-        color: #666;
-        font-size: 0.9rem;
-        margin-bottom: 30px;
+        color: #57606a;
+        font-size: 0.875rem;
+        margin-bottom: 2em;
         font-style: italic;
       }
 
       h2 {
-        color: #764ba2;
-        font-size: 1.8rem;
-        margin-top: 30px;
-        margin-bottom: 15px;
-        padding-bottom: 10px;
-        border-bottom: 2px solid #667eea;
+        color: #24292f;
+        font-size: 1.5em;
+        margin-top: 1.5em;
+        margin-bottom: 0.8em;
+        padding-bottom: 0.3em;
+        border-bottom: 1px solid #d0d7de;
+        font-weight: 600;
+        line-height: 1.25;
       }
 
       h3 {
-        color: #667eea;
-        font-size: 1.3rem;
-        margin-top: 20px;
-        margin-bottom: 10px;
+        color: #24292f;
+        font-size: 1.25em;
+        margin-top: 1.5em;
+        margin-bottom: 0.6em;
+        font-weight: 600;
+        line-height: 1.25;
       }
 
       p {
-        margin-bottom: 15px;
-        color: #555;
-        text-align: justify;
+        margin-bottom: 1em;
+        color: #24292f;
+        text-align: left;
+        line-height: 1.75;
       }
 
       ul {
-        margin: 15px 0;
-        padding-left: 30px;
+        margin: 1em 0;
+        padding-left: 2em;
+        list-style-type: disc;
       }
 
       li {
-        margin-bottom: 10px;
-        color: #555;
+        margin-bottom: 0.5em;
+        color: #24292f;
+        line-height: 1.75;
+      }
+
+      li::marker {
+        color: #57606a;
       }
 
       .highlight {
-        background: linear-gradient(
-          120deg,
-          rgba(102, 126, 234, 0.1) 0%,
-          rgba(118, 75, 162, 0.1) 100%
-        );
-        padding: 20px;
-        border-radius: 10px;
-        margin: 20px 0;
-        border-left: 4px solid #667eea;
+        background: #ddf4ff;
+        padding: 16px;
+        border-radius: 6px;
+        margin: 1em 0;
+        border-left: 4px solid #0969da;
+      }
+
+      .highlight p {
+        margin: 0;
       }
 
       .contact {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 25px;
-        border-radius: 15px;
-        margin-top: 30px;
-        text-align: center;
+        background: #f6f8fa;
+        color: #24292f;
+        padding: 24px;
+        border-radius: 6px;
+        border: 1px solid #d0d7de;
+        margin-top: 2em;
       }
 
       .contact h2 {
-        color: white;
-        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
-        padding-bottom: 10px;
-        margin-bottom: 15px;
+        color: #24292f;
+        border-bottom: 1px solid #d0d7de;
+        padding-bottom: 0.3em;
+        margin-bottom: 1em;
       }
 
       .contact p {
-        color: rgba(255, 255, 255, 0.95);
+        color: #24292f;
       }
 
       strong {
-        color: #667eea;
+        color: #24292f;
         font-weight: 600;
+      }
+
+      section {
+        margin-bottom: 2em;
       }
 
       @media (max-width: 768px) {
         .container {
-          padding: 25px;
+          padding: 32px 24px;
         }
 
         h1 {
-          font-size: 2rem;
+          font-size: 1.75em;
         }
 
         h2 {
-          font-size: 1.5rem;
+          font-size: 1.375em;
+        }
+
+        h3 {
+          font-size: 1.125em;
         }
       }
     </style>

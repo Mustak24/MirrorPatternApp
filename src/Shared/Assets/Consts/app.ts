@@ -9,3 +9,5 @@ export const APP_SHARE_INFO = {
     message: `Check out this cool app ${APP_NAME}! ${PLAY_STORE_URL}`,
     url: PLAY_STORE_URL,
 }
+
+export const PRIVACY_POLICY_URL = 'https://mustak24.github.io/MirrorPatternApp/static/privacy-policy.html';

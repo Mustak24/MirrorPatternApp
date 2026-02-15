@@ -207,6 +207,10 @@ This is a private project. For any questions or suggestions, please contact the 
 - [NativeWind](https://www.nativewind.dev)
 - [React Native Vision Camera](https://react-native-vision-camera.com)
 
+## 🔒 Privacy Policy
+
+For information about how we handle your data, please read our [Privacy Policy](https://mustak24.github.io/MirrorPatternApp/static/privacy-policy.html).
+
 ---
 
 **Made with ❤️ using React Native**
