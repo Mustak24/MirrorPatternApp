@@ -5,19 +5,26 @@ import { Button } from "@/Shared/Components/UI/Buttons";
 import PressableContainer from "@/Shared/Components/UI/Buttons/PressableContainer";
 import Loader from "@/Shared/Components/UI/Loader";
 import PatternPreviewModal from "@/Shared/Components/UI/Modals/PatternPreviewModal";
-import useImagePicker from "@/Shared/Hooks/useImagePicker";
+import useImagePicker, { MEDIA_PERMISSION_NAME } from "@/Shared/Hooks/useImagePicker";
+import usePermission from "@/Shared/Hooks/usePermission";
 import { ThemeText, ThemeView } from "@/Shared/Stores/Theme/Components";
 import { CameraRoll, PhotoIdentifier } from "@react-native-camera-roll/camera-roll";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FlatList, Image, View } from "react-native";
 
 export default function MyDesignsSection() {
+
+    const {permissionStatus, requestPermission} = usePermission({
+        permission: MEDIA_PERMISSION_NAME,
+        autoRequest: true,
+        onGrant: getDesigns
+    })
 
     const {openImagePicker, Modal} = useImagePicker((imagePath) => {
         navigationRef.navigate('MirrorPattern', {imagePath});
     })
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [designs, setDesigns] = useState<Array<PhotoIdentifier['node']['image']>>([]);
 
     const previewPatternPath = useRef('');
@@ -42,10 +49,6 @@ export default function MyDesignsSection() {
         }
     }
 
-    useEffect(() => {
-        getDesigns();
-    }, [])
-
     return (
         <ThemeView className="gap-4 flex-1" >
             <View className="flex-row items-center gap-2 justify-between" >
@@ -61,7 +64,7 @@ export default function MyDesignsSection() {
                 </ShowWhen>
             </View>
 
-            <View className="relative" >
+            <View className="relative h-34 flex-row items-center" >
                 <FlatList
                     horizontal
                     showsHorizontalScrollIndicator={false}
@@ -110,27 +113,45 @@ export default function MyDesignsSection() {
 
                 />
 
-                <View className="absolute h-full w-full rounded-xl overflow-hidden" 
-                    style={{display: !!designs.length ? 'none' : 'flex'}} 
-                >
-                    <PressableContainer color="bg-secondary" variant="solid" className="w-full h-full items-center justify-center gap-1" >
-                        <ShowWhen when={!loading} 
-                            otherwise={<Loader size={40} color="text-secondary" />}
-                        >
-                            <Icon name="ImageOff" size={40} color="text-secondary" />
-                        </ShowWhen>
+                
 
-                        <ThemeView color="bg-secondary" className="w-full rounded-[12px] items-center justify-center" >
-                            <ThemeText color="text-secondary" >
-                                <ShowWhen when={!loading} 
-                                    otherwise="Finding Designs..." 
-                                >
-                                    No Designs Found
-                                </ShowWhen>
-                            </ThemeText>
-                        </ThemeView>
-                    </PressableContainer>
-                </View>
+                <ThemeView color="bg-secondary" className="h-32 w-full rounded-xl overflow-hidden items-center justify-center" 
+                    // style={{display: !!designs.length ? 'none' : 'flex'}} 
+                >
+                    <ShowWhen when={permissionStatus === 'granted'} 
+                        otherwise={
+                            <View className="w-full h-full items-center justify-center gap-1" >
+                                <Button
+                                    startIcon="Shield"
+                                    title="Give Access"
+                                    onPress={requestPermission}
+                                />
+
+                                <ThemeText>
+                                    For display your design give media read access
+                                </ThemeText>
+                            </View>
+                        }
+                    >
+                        <View className="w-full h-full items-center justify-center gap-1" >
+                            <ShowWhen when={!loading} 
+                                otherwise={<Loader size={40} color="text-secondary" />}
+                            >
+                                <Icon name="ImageOff" size={40} color="text-secondary" />
+                            </ShowWhen>
+
+                            <ThemeView color="bg-secondary" className="w-full items-center justify-center" >
+                                <ThemeText color="text-secondary" >
+                                    <ShowWhen when={!loading} 
+                                        otherwise="Finding Designs..." 
+                                        >
+                                        No Designs Found
+                                    </ShowWhen>
+                                </ThemeText>
+                            </ThemeView>
+                        </View>
+                    </ShowWhen>
+                </ThemeView>
             </View>
 
             <Modal/>

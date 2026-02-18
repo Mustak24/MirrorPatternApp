@@ -5,7 +5,7 @@ import { useThemeStore } from "../Stores/Theme";
 
 
 
-const MEDIA_PERMISSION_NAME = (Platform.OS === 'android' && Platform.Version >= 33) ? (
+export const MEDIA_PERMISSION_NAME = (Platform.OS === 'android' && Platform.Version >= 33) ? (
         'android.permission.READ_MEDIA_IMAGES'
     ) : (
         'android.permission.READ_EXTERNAL_STORAGE'
