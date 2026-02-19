@@ -65,58 +65,62 @@ export default function MyDesignsSection() {
             </View>
 
             <View className="relative h-34 flex-row items-center" >
-                <FlatList
-                    horizontal
-                    showsHorizontalScrollIndicator={false}
-                    
-                    className="w-full rounded-xl"
-                    contentContainerClassName="flex-row items-center gap-4 flex-wrap"
+                <View
+                    className="w-full h-full flex-row items-center"
+                    style={{display: !!designs.length ? 'flex' : 'none'}}
+                >      
+                    <FlatList
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        
+                        className="w-full rounded-xl"
+                        contentContainerClassName="flex-row items-center gap-4 flex-wrap"
 
-                    data={designs}
-                    keyExtractor={item => item.uri}
+                        data={designs}
+                        keyExtractor={item => item.uri}
 
-                    renderItem={({item}) => (
-                        <PressableContainer
-                            className="aspect-square w-32 rounded-[12px] overflow-hidden relative" 
-                            color="bg-secondary"
-                            onPress={() => {
-                                previewPatternPath.current = item.uri;
-                                setIsPatternPreviewModalVisible(true);
-                            }}
-                        >
-                            <Image
-                                source={{uri: item.uri}}
-                                className="w-full h-full object-cover"
-                            />
-                        </PressableContainer>
-                    )}
-
-                    ListFooterComponent={
-                        <ShowWhen when={!!designs.length}>
-                            <PressableContainer 
-                                color="bg-secondary" 
-                                variant="soft-outlined" 
-                                className="aspect-square w-32 rounded-[12px] overflow-hidden items-center justify-center gap-2" 
-                                onPress={openImagePicker}
+                        renderItem={({item}) => (
+                            <PressableContainer
+                                className="aspect-square w-32 rounded-[12px] overflow-hidden relative" 
+                                color="bg-secondary"
+                                onPress={() => {
+                                    previewPatternPath.current = item.uri;
+                                    setIsPatternPreviewModalVisible(true);
+                                }}
                             >
-                                <Icon
-                                    name="Image"
-                                    size={40}
-                                    color="text-secondary"
+                                <Image
+                                    source={{uri: item.uri}}
+                                    className="w-full h-full object-cover"
                                 />
-                                <ThemeText color="text-secondary" className="font-semibold" >
-                                    {designs.length < 10 ? 'Create New' : 'See All'}
-                                </ThemeText>
                             </PressableContainer>
-                        </ShowWhen>
-                    }
+                        )}
 
-                />
+                        ListFooterComponent={
+                            <ShowWhen when={!!designs.length}>
+                                <PressableContainer 
+                                    color="bg-secondary" 
+                                    variant="soft-outlined" 
+                                    className="aspect-square w-32 rounded-[12px] overflow-hidden items-center justify-center gap-2" 
+                                    onPress={openImagePicker}
+                                >
+                                    <Icon
+                                        name="Image"
+                                        size={40}
+                                        color="text-secondary"
+                                    />
+                                    <ThemeText color="text-secondary" className="font-semibold" >
+                                        {designs.length < 10 ? 'Create New' : 'See All'}
+                                    </ThemeText>
+                                </PressableContainer>
+                            </ShowWhen>
+                        }
 
+                    />
+                </View>
                 
 
                 <ThemeView color="bg-secondary" className="h-32 w-full rounded-xl overflow-hidden items-center justify-center" 
-                    // style={{display: !!designs.length ? 'none' : 'flex'}} 
+                    style={{display: !!designs.length ? 'none' : 'flex'}} 
                 >
                     <ShowWhen when={permissionStatus === 'granted'} 
                         otherwise={
@@ -144,7 +148,7 @@ export default function MyDesignsSection() {
                                 <ThemeText color="text-secondary" >
                                     <ShowWhen when={!loading} 
                                         otherwise="Finding Designs..." 
-                                        >
+                                    >
                                         No Designs Found
                                     </ShowWhen>
                                 </ThemeText>
