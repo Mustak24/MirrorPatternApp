@@ -13,11 +13,12 @@ export type CenterModalProps = Omit<ModalProps, 'animationType'> & {
     setVisible: Dispatch<SetStateAction<boolean>>,
     preventCloseRequest?: boolean,
     containerProps?: ThemeViewProps,
-    backdropColor?: ColorStates
+    backdropColor?: ColorStates,
+    onClose?: () => void
 }
 
 
-export default function CenterModal({children, visible, setVisible, preventCloseRequest=false, onRequestClose, style, containerProps, backdropColor: backdropVariant='bg-secondary-90', ...props}: CenterModalProps) {
+export default function CenterModal({children, visible, setVisible, preventCloseRequest=false, onRequestClose, style, containerProps, backdropColor: backdropVariant='bg-secondary-90', onClose, ...props}: CenterModalProps) {
 
     const backdropColor = useThemeStore(states => states.colors[backdropVariant]);
 
@@ -69,7 +70,9 @@ export default function CenterModal({children, visible, setVisible, preventClose
             toValue: 0,
             bounciness: 12,
             useNativeDriver: true
-        }).start()
+        }).start(() => {
+            onClose?.();
+        })
     }
 
     function handleOnRequestClose() {

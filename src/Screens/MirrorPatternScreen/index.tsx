@@ -16,7 +16,7 @@ export default function MirrorPatterScreen() {
                 >
                 <HeaderSection/>
 
-                <View className="flex-1 px-5 items-center justify-center" >
+                <View className="flex-1 p-5 items-center justify-center" >
                     <PatternSection/>
                 </View>
                 

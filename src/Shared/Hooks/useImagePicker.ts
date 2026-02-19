@@ -1,6 +1,6 @@
 import { Platform, ToastAndroid } from "react-native";
 import usePermission from "./usePermission";
-import { openCropper, openPicker } from "react-native-image-crop-picker";
+import { Image, openCropper, openPicker } from "react-native-image-crop-picker";
 import { useThemeStore } from "../Stores/Theme";
 
 
@@ -11,7 +11,7 @@ export const MEDIA_PERMISSION_NAME = (Platform.OS === 'android' && Platform.Vers
         'android.permission.READ_EXTERNAL_STORAGE'
 );
 
-export default function useImagePicker(onPick: (imagePath: string) => void) {
+export default function useImagePicker(onPick: (image: Image) => void) {
 
     const textColor = useThemeStore(store => store.colors.text);
 
@@ -34,13 +34,13 @@ export default function useImagePicker(onPick: (imagePath: string) => void) {
                 path: image.path,
                 mediaType: 'photo',
                 compressImageQuality: 1,
-                width: 400,
-                height: 400,
+                freeStyleCropEnabled: true,
+                showCropGuidelines: true,
             })
 
 
             if(cropImage.path) {
-                onPick(cropImage.path);
+                onPick(cropImage);
                 return;
             }
             

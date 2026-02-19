@@ -3,10 +3,11 @@ import { RouteProp, useRoute } from "@react-navigation/native";
 import { createContext, ReactNode, RefObject, useContext as _useContext, useRef, useState, Dispatch, SetStateAction } from "react";
 import { Patterns } from "../Const/patterns";
 import { View } from "react-native";
+import { Image } from "react-native-image-crop-picker";
 
 
 const _CONTEXT = {
-    imagePath: {current: ''} as RefObject<string>,
+    imageInfo: {current: {} as Image} as RefObject<Image>,
     
     selectedPattern: '2T-1' as Patterns,
     setSelectedPattern: (() => {}) as Dispatch<SetStateAction<Patterns>>,
@@ -22,16 +23,16 @@ const Context = createContext(_CONTEXT);
 
 function Provider({children}: {children: ReactNode}) {
 
-    const {imagePath: imagePathFromRoute} = useRoute<RouteProp<RootStackParamList, 'MirrorPattern'>>().params;
+    const _imageInfo = useRoute<RouteProp<RootStackParamList, 'MirrorPattern'>>().params;
 
-    const imagePath = useRef(imagePathFromRoute);
+    const imageInfo = useRef(_imageInfo);
     const patternContainerRef = useRef<View | null>(null);
 
     const [selectedPattern, setSelectedPattern] = useState<Patterns>(_CONTEXT.selectedPattern);
     const [isPatternSaving, setIsPatternSaving] = useState(false);
 
     const states = {
-        imagePath,
+        imageInfo,
         
         selectedPattern,
         setSelectedPattern,

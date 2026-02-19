@@ -50,8 +50,8 @@ function ActionButtons() {
 
     const textColor = useThemeStore(store => store.colors.text);
 
-    const {openImagePicker, Modal} = useImagePicker((imagePath) => {
-        navigationRef.navigate('MirrorPattern', {imagePath});
+    const {openImagePicker, Modal} = useImagePicker((image) => {
+        navigationRef.navigate('MirrorPattern', image);
     });
 
     return (

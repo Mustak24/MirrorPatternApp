@@ -9,25 +9,29 @@ import useImagePicker, { MEDIA_PERMISSION_NAME } from "@/Shared/Hooks/useImagePi
 import usePermission from "@/Shared/Hooks/usePermission";
 import { ThemeText, ThemeView } from "@/Shared/Stores/Theme/Components";
 import { CameraRoll, PhotoIdentifier } from "@react-native-camera-roll/camera-roll";
-import { useRef, useState } from "react";
+import { useFocusEffect } from "@react-navigation/native";
+import { useCallback, useRef, useState } from "react";
 import { FlatList, Image, View } from "react-native";
+
+
+const MAX_HEIGHT = 108;
+
 
 export default function MyDesignsSection() {
 
     const {permissionStatus, requestPermission} = usePermission({
         permission: MEDIA_PERMISSION_NAME,
-        autoRequest: true,
         onGrant: getDesigns
     })
 
-    const {openImagePicker, Modal} = useImagePicker((imagePath) => {
-        navigationRef.navigate('MirrorPattern', {imagePath});
+    const {openImagePicker, Modal} = useImagePicker((image) => {
+        navigationRef.navigate('MirrorPattern', image);
     })
 
     const [loading, setLoading] = useState(false);
     const [designs, setDesigns] = useState<Array<PhotoIdentifier['node']['image']>>([]);
 
-    const previewPatternPath = useRef('');
+    const previewPatternInfo = useRef({path: '', width: 0, height: 0});
     const [isPatternPreviewModalVisible, setIsPatternPreviewModalVisible] = useState(false);
 
     async function getDesigns() {
@@ -39,6 +43,7 @@ export default function MyDesignsSection() {
                 first: 10,
                 assetType: 'Photos',
                 groupName: 'Mirror Patterns',
+                include: ["imageSize"]
             });
             
             setDesigns(assets.edges.map(e => e.node.image));
@@ -48,7 +53,11 @@ export default function MyDesignsSection() {
             setLoading(false);
         }
     }
-
+    
+    useFocusEffect(useCallback(() => {
+        requestPermission();
+    }, []))
+    
     return (
         <ThemeView className="gap-4 flex-1" >
             <View className="flex-row items-center gap-2 justify-between" >
@@ -59,7 +68,6 @@ export default function MyDesignsSection() {
                         disabled
                         variant="text"
                         title="See All"
-                        onPress={() => { }}
                     />
                 </ShowWhen>
             </View>
@@ -81,16 +89,23 @@ export default function MyDesignsSection() {
 
                         renderItem={({item}) => (
                             <PressableContainer
-                                className="aspect-square w-32 rounded-[12px] overflow-hidden relative" 
+                                className="rounded-[12px] overflow-hidden relative" 
                                 color="bg-secondary"
                                 onPress={() => {
-                                    previewPatternPath.current = item.uri;
+                                    previewPatternInfo.current = {
+                                        path: item.uri,
+                                        width: item.width,
+                                        height: item.height
+                                    };
+                                    
                                     setIsPatternPreviewModalVisible(true);
                                 }}
                             >
                                 <Image
                                     source={{uri: item.uri}}
-                                    className="w-full h-full object-cover"
+                                    height={MAX_HEIGHT}
+                                    width={MAX_HEIGHT * (item.width / item.height)}
+                                    className="object-cover"
                                 />
                             </PressableContainer>
                         )}
@@ -160,8 +175,7 @@ export default function MyDesignsSection() {
 
             <Modal/>
             <PatternPreviewModal
-                imagePath={previewPatternPath.current}
-
+                {...previewPatternInfo.current}
                 visible={isPatternPreviewModalVisible}
                 setVisible={setIsPatternPreviewModalVisible}
             />

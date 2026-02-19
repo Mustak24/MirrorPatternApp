@@ -5,7 +5,6 @@ import { useContext } from "../Context";
 import { captureRef } from "react-native-view-shot";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import usePermission from "@/Shared/Hooks/usePermission";
-import { navigationRef } from "@/Navigation";
 import PatternPreviewModal from "@/Shared/Components/UI/Modals/PatternPreviewModal";
 import { useRef, useState } from "react";
 
@@ -26,7 +25,7 @@ export default function HeaderSection() {
         onGrant: handleSave,
     });
 
-    const previewPatternPath = useRef('');
+    const previewPatternInfo = useRef({path: '', width: 0, height: 0});
     const [isPatternPreviewModalVisible, setIsPatternPreviewModalVisible] = useState(false);
 
     async function handleSave() {
@@ -34,15 +33,18 @@ export default function HeaderSection() {
 
         try {
             setIsPatternSaving(true);
-            
+            console.log(patternContainerRef)
             const pattern = await captureRef(patternContainerRef, {format: 'jpg', quality: 1});
+            console.log(pattern);
             
-            await CameraRoll.saveAsset(pattern, {
+            await CameraRoll.saveAsset(pattern, { 
                 type: 'photo',
-                album: 'Mirror Patterns'
+                album: 'Mirror Patterns',
             });
+
+            const {width, height} = patternContainerRef.current.getBoundingClientRect();
             
-            previewPatternPath.current = pattern;
+            previewPatternInfo.current = {path: pattern, width, height};
             setIsPatternPreviewModalVisible(true);
         
         } catch(e) {
@@ -70,9 +72,9 @@ export default function HeaderSection() {
             <Modal/>
             
             <PatternPreviewModal
-                imagePath={previewPatternPath.current}
+                {...previewPatternInfo.current}
                 visible={isPatternPreviewModalVisible}
-                setVisible={setIsPatternPreviewModalVisible}
+                setVisible={setIsPatternPreviewModalVisible}    
             />
         </EntityHeader>
     )

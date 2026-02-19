@@ -24,17 +24,15 @@ export default function CameraWindow({children}: {children: ReactNode}) {
         })
 
         try {
-            const cropImage = await openCropper({
+            const croppedImage = await openCropper({
                 cropperToolbarTitle: "Crop Image",
                 mediaType: "photo",
                 path: `file://${photo.path}`,
                 cropperTintColor: textColor,
-                compressImageQuality: 1,
-                width: 400,
-                height: 400,
+                compressImageQuality: 1
             })
 
-            navigationRef.navigate("MirrorPattern", {imagePath: cropImage.path})
+            navigationRef.navigate("MirrorPattern", croppedImage)
         } catch(e) {
             console.error('crop error', e);
         }
