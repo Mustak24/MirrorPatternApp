@@ -33,9 +33,12 @@ export default function HeaderSection() {
 
         try {
             setIsPatternSaving(true);
-            console.log(patternContainerRef)
-            const pattern = await captureRef(patternContainerRef, {format: 'jpg', quality: 1});
-            console.log(pattern);
+            const pattern = await captureRef(patternContainerRef, {
+                format: 'jpg', 
+                quality: 1,
+                height: 1080,
+                width: 1080
+            });
             
             await CameraRoll.saveAsset(pattern, { 
                 type: 'photo',
