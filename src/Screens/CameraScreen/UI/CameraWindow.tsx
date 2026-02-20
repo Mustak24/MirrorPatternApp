@@ -29,7 +29,9 @@ export default function CameraWindow({children}: {children: ReactNode}) {
                 mediaType: "photo",
                 path: `file://${photo.path}`,
                 cropperTintColor: textColor,
-                compressImageQuality: 1
+                compressImageQuality: 1,
+                freeStyleCropEnabled: true,
+                showCropGuidelines: true,
             })
 
             navigationRef.navigate("MirrorPattern", croppedImage)
