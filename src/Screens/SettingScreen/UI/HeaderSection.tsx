@@ -41,7 +41,14 @@ export default function HeaderSection() {
                 </Animated.View>
                 
                 <ThemeText className="font-semibold" >
-                    by @Mustak24
+                    by 
+                </ThemeText>
+                
+                <ThemeText color="primary" className="font-bold" >
+                    @Pixel Prop
+                    <ThemeText color="success" >
+                        X
+                    </ThemeText>
                 </ThemeText>
             </View>
         </EntityHeader>
